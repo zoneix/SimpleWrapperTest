@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<!--
+	Eventually by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Cisco Spark SDK for Android</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+</head>
+<body data-feedly-mini="no" style="padding-top: 18px;">
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+<!-- Header -->
+<header id="header">
+    <h1><img src="images/spark_image.png" style="width:100px;height:80px;">Quick Connect</h1>
+    <p>Demonstration of the Spark Android SDK in action. Brought to you by <a href="https://developer.ciscospark.com">Cisco Spark for Developers</a>.</p>
+</header>
+
+<!-- Signup Form -->
+<form id="signup-form" method="post" action="#">
+    <input type="text" style="width:348px" name="callername" id="callername" placeholder=" Your Name " />
+    <input type="email" style="width:348px" name="email" id="email" placeholder=" Spark Subscriber to Call" />
+    <input type="submit" value="Start Demo" onClick="GetJWT()"/>
+</form>
+
+<script type="text/javascript">
+    function GetJWT() {
+        guest_name = document.getElementById("callername").value;
+        callee_URI = document.getElementById("email").value;
+
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": "https://v0wh322qyf.execute-api.us-east-1.amazonaws.com/latest/jot",
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "processData": false,
+          "data": "{\"name\":\"" + guest_name + "\" ,\"email\":\"" + guest_name + "\" }"
+        }
+
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+          Android.StartDemo(response, callee_URI);
+        });
+
+    }
+</script>
+
+
+
+<!-- Footer -->
+<footer id="footer">
+    <ul class="icons">
+        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        <li><a href="https://github.com/ciscospark/spark-android-sdk" class="icon fa-github"><span class="label">GitHub</span></a></li>
+    </ul>
+    <ul class="copyright">
+        <li>&copy; Cisco Systems.</li><li>Demo Credits: <a href="https://www.cisco.com">CTG Practices & Ryan Weddle</a></li>
+        <li>Template Credits: <a href="http://html5up.net">HTML5 UP</a></li>
+    </ul>
+</footer>
+
+<!-- Scripts -->
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
