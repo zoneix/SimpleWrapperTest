@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebChromeClient;
 import android.webkit.WebViewClient;
@@ -13,11 +14,26 @@ import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 import android.content.Context;
 
+import com.ciscospark.androidsdk.Spark;
+import com.ciscospark.androidsdk.auth.JWTAuthenticator;
+import com.ciscospark.androidsdk.auth.Authenticator;
+import com.ciscospark.androidsdk.phone.Call;
+import com.ciscospark.androidsdk.phone.CallObserver;
 import com.ryanweddle.sparksdkwrapper.SparkCall;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CallObserver {
+
+    /*
+    private JWTAuthenticator authenticator = new JWTAuthenticator();
+    private Spark spark = new Spark(this.getApplication(),authenticator);
+
+    if (!authenticator.isAuthorized()) {
+        authenticator.authorize(myJwt);
+    }
+    */
 
     private WebView myWebView;
+    private Bundle myWebViewBundle;
 
     private Button mCallButton;
     private EditText mCallEdit;
@@ -30,15 +46,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.splash_activity);
-        myWebView = (WebView)findViewById(R.id.splash_webview);
+        myWebView = (WebView) findViewById(R.id.splash_webview);
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.setWebChromeClient(new WebChromeClient());
         myWebView.setWebViewClient(new WebViewClient());
-        myWebView.addJavascriptInterface(new WebAppInterface(this),"Android");
-        myWebView.loadUrl("file:///android_asset/www/index.html");
+        myWebView.addJavascriptInterface(new WebAppInterface(this), "Android");
+        if(savedInstanceState!=null){
+            myWebView.restoreState(savedInstanceState);
+        } else {
+
+            myWebView.loadUrl("file:///android_asset/www/index.html");
+        }
+
+        /*
+        if (myWebViewBundle == null) {
+            myWebView.loadUrl("file:///android_asset/www/index.html");
+        } else {
+            myWebView.restoreState(myWebViewBundle);
+        }
+        */
 
 
         /*
@@ -67,12 +97,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        myWebView.saveState(outState);
+    }
+
+    @Override
     public void onBackPressed() {
         if(myWebView.canGoBack()) {
             myWebView.goBack();
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(CLASS_TAG, "OnPause Called");
+        myWebViewBundle = new Bundle();
+        myWebView.saveState(myWebViewBundle);
+    }
+
+    //Call Observer Methods
+
+    @Override
+    public void onRinging(Call call) {
+
+    }
+
+    @Override
+    public void onConnected(Call call) {
+
+    }
+
+    @Override
+    public void onDisconnected(CallDisconnectedEvent event) {
+
+    }
+
+    @Override
+    public void onMediaChanged(MediaChangedEvent event) {
+
+    }
+
+    @Override
+    public void onCallMembershipChanged(CallMembershipChangedEvent event) {
+
     }
 
     //try WebAppInterface code here -
@@ -91,7 +162,9 @@ public class MainActivity extends AppCompatActivity {
         public void StartDemo (String jot, String uri)
         {
             //Toast.makeText(mContext,jot, Toast.LENGTH_SHORT).show();
-            Toast.makeText(mContext,"Received JWT from AWS Lambda",Toast.LENGTH_SHORT).show();
+            Log.d(CLASS_TAG, "got JOT - " + jot);
+            Log.d(CLASS_TAG, "got uri - " + uri);
+            //Toast.makeText(mContext,"Received JWT from AWS Lambda",Toast.LENGTH_SHORT).show();
             Log.i(CLASS_TAG, "Call Button Pressed");
             Log.i(CLASS_TAG, "The context is - "+ mContext);
             Intent intent = new Intent(mContext, SparkCall.class);
@@ -105,6 +178,11 @@ public class MainActivity extends AppCompatActivity {
             */
             startActivity (intent);
 
+        }
+
+        @JavascriptInterface
+        public void DeviceRegistration()
+        {
         }
 
         /*

@@ -14,26 +14,50 @@
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 </head>
-<body data-feedly-mini="no" style="padding-top: 18px;">
+<body data-feedly-mini="no" style="padding-top: 4px;">
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
-<!-- Header -->
+<!-- Header
 <header id="header">
     <h1><img src="images/spark_image.png" style="width:100px;height:80px;">Quick Connect</h1>
-    <p>Demonstration of the Spark Android SDK in action. Brought to you by <a href="https://developer.ciscospark.com">Cisco Spark for Developers</a>.</p>
+
+    <p>Hi! Let's get started with a demonstration of our latest Mobile SDK! Brought to you by <a href="https://developer.ciscospark.com">Cisco Spark for Developers</a>.</p>
+
 </header>
+-->
+
+<div id="branding">
+    <div id="logo" align="center" style="margin-top:2px;"><img src="images/spark_image.png" style="width:90px;height:70px;"></div>
+    <h1 align="center">QuickConnect</h1>
+</div>
+<div align="center" id="top_banner">
+    <!--
+    <h1><img src="images/spark_image.png" style="width:100px;height:80px;">QuickConnect</h1>
+    -->
+    <p>Demonstrating our latest Mobile SDK! Learn more about it at <a href="https://developer.ciscospark.com">Cisco Spark for Developers</a>.</p>
+</div>
 
 <!-- Signup Form -->
-<form id="signup-form" method="post" action="#">
-    <input type="text" style="width:348px" name="callername" id="callername" placeholder=" Your Name " />
-    <input type="email" style="width:348px" name="email" id="email" placeholder=" Spark Subscriber to Call" />
-    <input type="submit" value="Start Demo" onClick="GetJWT()"/>
-</form>
+<div align="center" id="first_form" style="display:block">
+    <p><br><i>Before we continue...</i></p>
+    <input type="text" style="width:80%;margin-top: 10px;" name="callername" id="callername" placeholder=" Your Name " />
+    <input type="email" style="width:80%;margin-top: 10px;" name="calleremail" id="calleremail" placeholder=" Your Email " />
+    <button style="width:80%;margin-top: 10px;" onclick="GetJWT()">Next</button>
+</div>
+
+<div align="center" id="call_form" style="display:none">
+    <p>...and the subscriber you would like to call?</p>
+    <input type="email" style="width:80%;margin-top: 10px;" name="email" id="uri" placeholder=" Spark subscriber email " />
+    <button style="width:80%;margin-top: 10px;" onclick="PlaceCall()">Call</button>
+</div>
 
 <script type="text/javascript">
+
+    var JWT;
+
     function GetJWT() {
         guest_name = document.getElementById("callername").value;
-        callee_URI = document.getElementById("email").value;
+        guest_email = document.getElementById("calleremail").value;
 
         var settings = {
           "async": true,
@@ -44,13 +68,26 @@
             "Content-Type": "application/json"
           },
           "processData": false,
-          "data": "{\"name\":\"" + guest_name + "\" ,\"email\":\"" + guest_name + "\" }"
+          "data": "{\"name\":\"" + guest_name + "\" ,\"email\":\"" + guest_email + "\" }"
         }
 
         $.ajax(settings).done(function (response) {
           console.log(response);
-          Android.StartDemo(response, callee_URI);
+          JWT = response;
+          console.log(JWT);
+          (document.getElementById("first_form")).style.display = "none";
+          (document.getElementById("top_banner")).style.display = "none";
+          (document.getElementById("call_form")).style.display = "block";
+          //x.style.display = "block";
+          //Android.StartDemo(response, callee_URI);
         });
+
+    }
+
+    function PlaceCall(){
+
+        callee_uri = document.getElementById("uri").value;
+        Android.StartDemo(JWT, callee_uri);
 
     }
 </script>
@@ -58,14 +95,12 @@
 
 
 <!-- Footer -->
-<footer id="footer">
+<footer id="footer" align="center">
     <ul class="icons">
-        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
         <li><a href="https://github.com/ciscospark/spark-android-sdk" class="icon fa-github"><span class="label">GitHub</span></a></li>
     </ul>
     <ul class="copyright">
-        <li>&copy; Cisco Systems.</li><li>Demo Credits: <a href="https://www.cisco.com">CTG Practices & Ryan Weddle</a></li>
+        <li>&copy; 2018 Cisco Systems. <a href="https://www.cisco.com">CTG Practices & Ryan Weddle</a></li>
         <li>Template Credits: <a href="http://html5up.net">HTML5 UP</a></li>
     </ul>
 </footer>

@@ -10,6 +10,7 @@ import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class SparkCall extends AppCompatActivity implements CallObserver {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_spark_call);
 
         Log.v(CLASS_TAG, "onCreate");
