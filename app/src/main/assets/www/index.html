@@ -6,7 +6,7 @@
 -->
 <html>
 <head>
-    <title>Cisco Spark SDK for Android</title>
+    <title>Cisco Webex Teams SDK for Android</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -17,29 +17,19 @@
 <body data-feedly-mini="no" style="padding-top: 4px;">
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
-<!-- Header
-<header id="header">
-    <h1><img src="images/spark_image.png" style="width:100px;height:80px;">Quick Connect</h1>
-
-    <p>Hi! Let's get started with a demonstration of our latest Mobile SDK! Brought to you by <a href="https://developer.ciscospark.com">Cisco Spark for Developers</a>.</p>
-
-</header>
--->
-
 <div id="branding">
-    <div id="logo" align="center" style="margin-top:2px;"><img src="images/spark_image.png" style="width:90px;height:70px;"></div>
+    <div id="logo" align="center" style="margin-top:2px;"><img src="images/teams_logo.png" style="width:60px;height:60px;"></div>
     <h1 align="center">QuickConnect</h1>
 </div>
 <div align="center" id="top_banner">
-    <!--
-    <h1><img src="images/spark_image.png" style="width:100px;height:80px;">QuickConnect</h1>
-    -->
-    <p>Demonstrating our latest Mobile SDK! Learn more about it at <a href="https://developer.ciscospark.com">Cisco Spark for Developers</a>.</p>
+    <p>Transformational customer experiences!</p>
+    <p>Learn more at</p>
+    <p><a href="https://developer.webex.com">Cisco Webex for Developers</a>.</p>
 </div>
 
 <!-- Signup Form -->
 <div align="center" id="first_form" style="display:block">
-    <p><br><i>Before we continue...</i></p>
+    <p><br><i>Before we begin...</i></p>
     <input type="text" style="width:80%;margin-top: 10px;" name="callername" id="callername" placeholder=" Your Name " />
     <input type="email" style="width:80%;margin-top: 10px;" name="calleremail" id="calleremail" placeholder=" Your Email " />
     <button style="width:80%;margin-top: 10px;" onclick="GetJWT()">Next</button>
@@ -47,7 +37,7 @@
 
 <div align="center" id="call_form" style="display:none">
     <p>...and the subscriber you would like to call?</p>
-    <input type="email" style="width:80%;margin-top: 10px;" name="email" id="uri" placeholder=" Spark subscriber email " />
+    <input type="email" style="width:80%;margin-top: 10px;" name="email" id="uri" placeholder=" Webex subscriber email " />
     <button style="width:80%;margin-top: 10px;" onclick="PlaceCall()">Call</button>
 </div>
 
@@ -94,15 +84,24 @@
 
 
 
-<!-- Footer -->
+<!-- Footer
 <footer id="footer" align="center">
     <ul class="icons">
         <li><a href="https://github.com/ciscospark/spark-android-sdk" class="icon fa-github"><span class="label">GitHub</span></a></li>
     </ul>
     <ul class="copyright">
-        <li>&copy; 2018 Cisco Systems. <a href="https://www.cisco.com">CTG Practices & Ryan Weddle</a></li>
+        <li>&copy; 2018 Cisco Systems. <a href="https://www.cisco.com">CTG Practices</a></li>
+        <!--
         <li>Template Credits: <a href="http://html5up.net">HTML5 UP</a></li>
+
     </ul>
+</footer>
+-->
+
+<!-- Footer -->
+<footer id="footer" align="center" style="width:80%;left:auto;right:auto">
+    <p><a href="https://github.com/ciscospark/spark-android-sdk" class="icon fa-github"><span class="label">GitHub</span></a></p>
+    <p>&copy; 2018 Cisco Systems. <a href="https://www.cisco.com">CTG Practices</a></p>
 </footer>
 
 <!-- Scripts -->
